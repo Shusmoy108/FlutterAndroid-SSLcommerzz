@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 void main() {
   runApp(MyApp());
@@ -10,6 +11,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Flutter Demo',
+      debugShowCheckedModeBanner: false,
       theme: ThemeData(
         // This is the theme of your application.
         //
@@ -46,9 +48,21 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  static const platform = const MethodChannel("com.flutter.connect/connection");
   int _counter = 0;
+  void printy() async {
+    var sendMap = <String, dynamic>{"name": "Shusmoy"};
+    String value = "";
+    try {
+      value = await platform.invokeMethod("Pay", sendMap);
+    } catch (e) {
+      print(e);
+    }
+    print(value);
+  }
 
   void _incrementCounter() {
+    printy();
     setState(() {
       // This call to setState tells the Flutter framework that something has
       // changed in this State, which causes it to rerun the build method below
